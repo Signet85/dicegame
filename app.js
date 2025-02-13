@@ -1,5 +1,7 @@
 
 // Тоглоомын бүх газарт ашиглагдах глобаль хувьсагчийг энд зарлах
+//Тоглоом дууссан эсэхийг хадгалах төлөвийн хувьсагч
+var isNewGame;
 //Аль тоглогч шоо шидэх вэ гэдгийг энд хадгална.
 var activePlayer;
 //Хоёр тоглогчийн цуцлуулсан оноо
@@ -14,6 +16,8 @@ var diceDom = document.querySelector(".dice");
 initGame();
 // Тоглоомыг шинээр эхлэнэ
 function initGame(){
+    // Тоглоом эхэллэ гэдэг төлөвт оруулна.
+isNewGame = true;
     //Тоглогчийн ээлжийг хадгалах хувьсагч, нэгдүгээр тоглогчийг 0ь хоёрдугаар тоглогчийг 1 гэж нэрлэе.
 activePlayer = 0;
 
@@ -50,6 +54,7 @@ document.querySelector('.player-0-panel').classList.add("active");
 
 // Шоог шидэх эвэнт листенер
 document.querySelector(".btn-roll").addEventListener("click",function (){
+    if(isNewGame === true){
 
     // 1-6 хүртэл санамсаргүй нэг тоог гаргаж авна
     var diceNumber = Math.floor(Math.random()*6)+1;
@@ -72,7 +77,7 @@ document.querySelector(".btn-roll").addEventListener("click",function (){
         switchToNextPlayer();
 
     }
-});
+}});
 
 // HOLD товчны эвэнт листенер
 document.querySelector('.btn-hold').addEventListener('click', function(){
@@ -87,7 +92,9 @@ document.querySelector('.btn-hold').addEventListener('click', function(){
     //Дэлгэц дээр оноог нь өөрчлөнө
     document.getElementById('score-'+activePlayer).textContent = scores[activePlayer];
     //Уг тоглогч хожсон эсэхийг шалгах
-    if(scores[activePlayer] >= 10){
+    if(scores[activePlayer] >= 100){
+        //Тоглоомыг дууссан төлөвт оруулна
+        isNewGame=false;
         // Ялагч гэсэн текстийг нэрнийх нь оронд гаргана
         document.getElementById("name-" + activePlayer).textContent="Winner";
         document.querySelector('.player-'+activePlayer+'-panel').classList.add('winner');
